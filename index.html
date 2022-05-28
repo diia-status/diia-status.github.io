@@ -1,1 +1,35 @@
-it works!
+<html>
+<head>
+    <title>Дія Статус</title>
+    <meta name="description" content="Перевірка статусу роботи додатку Дія">
+    <meta name="keywords" content="дія, не працює, помилка, статус">
+    <style>
+        html, body {
+            font-family: Arial, sans-serif;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Чи працює <span style="background-color: #000;color: #fff;border-radius: 5px;padding: 2px 5px">Дія</span> зараз?
+</h1>
+
+Дія Кабінет: <span id="result-cab">...</span>
+
+<script>
+    function resultCabError() {
+        document.getElementById('result-cab').innerHTML = '<span style="background-color:#f00;padding: 2px 5px">помилка</span>';
+    }
+
+    fetch('https://cabinet-api.diia.gov.ua/test/ping').then(response => {
+        response.json().then(response => {
+            if (response && response.data && response.data.message === 'pong') {
+                document.getElementById('result-cab').innerHTML = '<span style="background-color:#3f3;padding: 2px 5px">працює</span>';
+            } else {
+                resultCabError();
+            }
+        }).catch(resultCabError);
+    }).catch(resultCabError);
+</script>
+</body>
+</html>
